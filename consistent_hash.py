@@ -28,5 +28,12 @@ class ConsistentHash:
             hash_value = self._hash(virtual_node)
             del self.hash_ring[hash_value]
 
-
-   
+    def get_server(self, request_id):
+        """Get the server responsible for a request."""
+        hash_value = self._hash(request_id)
+        # Find the nearest server in the clockwise direction
+        for i in range(hash_value, hash_value + self.num_slots):
+            slot = i % self.num_slots
+            if slot in self.hash_ring:
+                return self.hash_ring[slot]
+        return None  # No server found (shouldn't happen in a consistent hash)
