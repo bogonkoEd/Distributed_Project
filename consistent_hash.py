@@ -20,4 +20,13 @@ class ConsistentHash:
             hash_value = self._hash(virtual_node)
             self.hash_ring[hash_value] = server_name
 
+    def remove_server(self, server_name):
+        """Remove a server from the hash ring."""
+        self.servers.remove(server_name)
+        for i in range(self.num_replicas):
+            virtual_node = f"{server_name}:{i}"
+            hash_value = self._hash(virtual_node)
+            del self.hash_ring[hash_value]
+
+
    
