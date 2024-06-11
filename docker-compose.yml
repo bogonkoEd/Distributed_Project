@@ -1,44 +1,50 @@
 services:
-  balancer:  # Define the load balancer service
-    build:
-      context: .
-      dockerfile: Dockerfile.balancer  # Use a separate Dockerfile for the balancer
+  load_balancer:
+    build: 
+      context: ./load_balancer
+      dockerfile: Dockerfile
     ports:
       - "80:80"
-    command: python load_balancer.py  # Expose port 80 on the host, mapping to container port 80
+    networks:
+      - load_balancer_network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
-  sub-server-1:
-    build:
-      context: .
-      args:
-        SERVER_ID: 1
+
+  server1:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_ID=1
     ports:
       - "5001:5000"
-    command: python serverInstance.py
+    networks:
+      - load_balancer_network
 
-  sub-server-2:
-    build:
-      context: .
-      args:
-        SERVER_ID: 2
+
+  server2:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_ID=2
     ports:
       - "5002:5000"
-    command: python serverInstance.py
+    networks:
+      - load_balancer_network
 
-  sub-server-3:
-    build:
-      context: .
-      args:
-        SERVER_ID: 3
+  server3:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_ID=3
     ports:
       - "5003:5000"
-    command: python serverInstance.py
+    networks:
+      - load_balancer_network
 
-  sub-server-4:
-    build:
-      context: .
-      args:
-        SERVER_ID: 4
-    ports:
-      - "5004:5000"
-    command: python serverInstance.py
+networks:
+  load_balancer_network:
+    driver: bridge
