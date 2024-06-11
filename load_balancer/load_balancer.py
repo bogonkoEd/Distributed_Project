@@ -3,11 +3,16 @@ import docker
 from flask import Flask, request, redirect, jsonify
 import socket
 from consistent_hash import ConsistentHash
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 hash_ring = ConsistentHash(num_replicas=3)
 
-client = docker.from_env()
+client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 @app.route('/', methods=['GET'])
 def landing_page():
