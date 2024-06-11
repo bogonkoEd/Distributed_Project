@@ -1,6 +1,12 @@
-version: '3'
-
 services:
+  balancer:  # Define the load balancer service
+    build:
+      context: .
+      dockerfile: Dockerfile.balancer  # Use a separate Dockerfile for the balancer
+    ports:
+      - "80:80"
+    command: python load_balancer.py  # Expose port 80 on the host, mapping to container port 80
+
   sub-server-1:
     build:
       context: .
@@ -8,6 +14,7 @@ services:
         SERVER_ID: 1
     ports:
       - "5001:5000"
+    command: python serverInstance.py
 
   sub-server-2:
     build:
@@ -16,6 +23,7 @@ services:
         SERVER_ID: 2
     ports:
       - "5002:5000"
+    command: python serverInstance.py
 
   sub-server-3:
     build:
@@ -24,6 +32,7 @@ services:
         SERVER_ID: 3
     ports:
       - "5003:5000"
+    command: python serverInstance.py
 
   sub-server-4:
     build:
@@ -32,3 +41,4 @@ services:
         SERVER_ID: 4
     ports:
       - "5004:5000"
+    command: python serverInstance.py
