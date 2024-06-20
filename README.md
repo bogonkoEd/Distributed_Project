@@ -16,12 +16,6 @@ To achieve efficient request distribution and fault tolerance, the project emplo
 ### 4. Scalability
 The architecture allows easy scaling by simply adding more backend servers. The load balancer will automatically include these new servers into its routing algorithm, making it simple to handle increasing loads.
 
-## Project Structure
-
-- `Load_balancer.py`: The main application file for the load balancer.
-- `docker-compose.yml`: Docker Compose file to set up the load balancer and backend servers.
-- `consistent_hash.py`: A module implementing the consistent hashing algorithm (not provided, assumed to be part of the project).
-
 ## Requirements
 
 - Docker
@@ -37,4 +31,5 @@ The architecture allows easy scaling by simply adding more backend servers. The 
 
 ```sh
 git clone https://github.com/bogonkoEd/Distributed_Project.git
-to run: docker-compose up --build
+to run: Bash** docker-compose up --build
+Open LocalHost
