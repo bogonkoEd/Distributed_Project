@@ -7,6 +7,7 @@ RUN pip3 install -r requirements.txt
 
 COPY consistent_hash.py .
 COPY load_balancer.py .
+COPY graph_gen.py .
 
 EXPOSE 80
 
