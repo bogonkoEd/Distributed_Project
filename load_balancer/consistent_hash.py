@@ -1,7 +1,7 @@
-import hashlib
+import mmh3
 
 class ConsistentHash:
-    def __init__(self, num_slots=160, num_replicas=3): #replicas are defined as input argument
+    def __init__(self, num_slots=160, num_replicas=3): 
         self.num_slots = num_slots
         self.num_replicas = num_replicas
         self.hash_ring = {}
@@ -10,14 +10,14 @@ class ConsistentHash:
 
     def _hash(self, key):
         """Generic hash function using MD5."""
-        return int(hashlib.md5(key.encode()).hexdigest(), 16) % self.num_slots
+        return mmh3.hash(key) % self.num_slots
 
     def add_server(self, server_name):
-        self.server_names.append(server_name)
         for i in range(self.num_replicas):
             virtual_node = f"{server_name}#{i}"
             self.hash_ring[self._hash(virtual_node)] = server_name
-            self.server_requests[server_name] = 0
+            if server_name not in self.server_requests:
+                self.server_requests[server_name] = 0
 
     def remove_server(self, server_name):
         self.server_names.remove(server_name)

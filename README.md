@@ -1,5 +1,15 @@
 # Load Balancer Project
 
+## Group Members
+---
+- 137192 Bogonko Eddy
+- 137938 Martin Mwangi 
+- 146013 Amanda Karani
+- 139991 Glen Musa
+- 146424 Masoud Hassan
+
+## Project Description
+
 This project implements a load balancer using Flask and Docker. The load balancer distributes incoming requests to a pool of backend servers based on a consistent hashing algorithm. This ensures efficient distribution of requests and improves the reliability and scalability of the system.
 
 ## Objectives
@@ -16,20 +26,100 @@ To achieve efficient request distribution and fault tolerance, the project emplo
 ### 4. Scalability
 The architecture allows easy scaling by simply adding more backend servers. The load balancer will automatically include these new servers into its routing algorithm, making it simple to handle increasing loads.
 
-## Requirements
+## Setup
+
+### Requirements
 
 - Docker
-- Docker Compose
 - Python 3.x
 - Flask
-- docker (Python library)
-- consistent_hash (Python library)
-
-## Setup
 
 ### Clone the repository
 
-```sh
+```bash
+
 git clone https://github.com/bogonkoEd/Distributed_Project.git
-to run: Bash** docker-compose up --build
-Open LocalHost
+
+```
+    
+### Create a virtual environment and install dependencies
+
+```bash
+
+cd Distributed_Project    
+python -m venv global
+source global/bin/activate
+pip install -r requirements.txt
+
+```
+### Run the load balancer
+
+```bash
+docker-compose up --build
+```
+
+Expect this output:
+
+### Server
+
+Check the load balancer is active by accessing:
+
+    http://localhost:80/
+
+Some useful links
+
+Get distribution of incoming requests
+    
+    http://localhost:80/stats 
+
+Make sure the load balancer is active by accessing:
+
+    http://localhost:80/healthcheck 
+
+Make sure the server is running by accessing:
+
+    http://localhost:{server's port}/healthcheck
+
+Plot distribution of recent requests (last 30 minutes)
+
+    http://localhost:59987 
+
+    
+
+## Consistent Hashing Implementation
+
+This code provides a consistent hashing algorithm to distribute requests (or data) across a cluster of servers efficiently and reliably. Consistent hashing is particularly valuable in distributed systems where servers might be added or removed dynamically.
+
+### Hash Ring:
+
+A dictionary (hash_ring) that maps hash values to server names.
+Each server is represented multiple times on the ring as "virtual nodes" to enhance distribution evenness.
+
+### Server Management:
+
+Tracks the actual server names in a list (server_names) for maintenance purposes.
+Monitors request distribution by counting requests per server (server_requests).
+
+### Key Functions
+   - **add_server(server_name)**:
+    Introduces a new server to the system.
+    Creates multiple virtual nodes for the server, each hashed to a distinct location on the ring.
+
+    Example:
+
+   - **remove_server(server_name)**:
+    Takes a server out of operation.Removes all its virtual nodes and associated request tracking.
+    
+- **get_server(request_id)**:
+Hashes the request ID.Locates the closest server (or its virtual node) on the hash ring in a clockwise direction from the hash value.Assigns the request to that server and updates its request count.
+
+
+## Load Balancer Analysis
+---
+### Load Test 
+
+Bundled together with this project is a python script to simulate many parallel HTTP requests to the Load Balancer, in our case we tried 1000 requests. Logs directory is created by the Load Balancer to keep track of the HTTP requests and the servers at served them.
+
+### Load Distribution
+
+Bundled together with this project is a python script to analysis the distribution of requests on servers in hash ring. It analyse the logs file.    

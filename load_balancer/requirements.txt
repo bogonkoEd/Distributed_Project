@@ -1,3 +1,5 @@
 Flask
 docker
 plotly
+python-json-logger
+mmh3
