@@ -60,6 +60,11 @@ docker-compose up --build
 
 Expect this output:
 
+<img width="571" alt="docker_up" src="https://github.com/user-attachments/assets/93e8d073-9048-498b-a6ff-1e75266cf40e">
+
+<img width="741" alt="Load_balancer" src="https://github.com/user-attachments/assets/95a5237a-e85a-440f-ad0e-986baa3b5374">
+
+
 ### Server
 
 Check the load balancer is active by accessing:
@@ -104,8 +109,7 @@ Monitors request distribution by counting requests per server (server_requests).
    - **add_server(server_name)**:
     Introduces a new server to the system.
     Creates multiple virtual nodes for the server, each hashed to a distinct location on the ring.
-
-    Example:
+    <img width="275" alt="Add_server" src="https://github.com/user-attachments/assets/f0fa36dd-c5d8-4d43-ac7f-8043ee5a29dc">
 
    - **remove_server(server_name)**:
     Takes a server out of operation.Removes all its virtual nodes and associated request tracking.
@@ -118,8 +122,16 @@ Hashes the request ID.Locates the closest server (or its virtual node) on the ha
 ---
 ### Load Test 
 
-Bundled together with this project is a python script to simulate many parallel HTTP requests to the Load Balancer, in our case we tried 1000 requests. Logs directory is created by the Load Balancer to keep track of the HTTP requests and the servers at served them.
+Bundled together with this project is a python script, **sim.py** to simulate many parallel HTTP requests to the Load Balancer, in our case we tried 1000 requests. Logs directory is created by the Load Balancer to keep track of the HTTP requests and the servers at served them.
+<img width="575" alt="Load_test" src="https://github.com/user-attachments/assets/f0c8f5b0-3b11-4763-bf15-3618d7693d26">
 
 ### Load Distribution
 
-Bundled together with this project is a python script to analysis the distribution of requests on servers in hash ring. It analyse the logs file.    
+Bundled together with this project is a python script to analysis the distribution of requests on servers in hash ring. It analyse the logs file.  
+We used a browser extension, URL Loader, in order to capture the requests in the requests.log.
+<img width="253" alt="Distro_test" src="https://github.com/user-attachments/assets/55b0d94d-53a7-4341-a883-f6c6e14c54c8">
+The plotted results: 
+![newplot](https://github.com/user-attachments/assets/f01b0f73-579e-41a0-960c-c2a19fb23fc8)
+
+
+
