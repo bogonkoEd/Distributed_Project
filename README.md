@@ -130,6 +130,7 @@ Bundled together with this project is a python script, **sim.py** to simulate ma
 Bundled together with this project is a python script to analysis the distribution of requests on servers in hash ring. It analyse the logs file.  
 We used a browser extension, URL Loader, in order to capture the requests in the requests.log.
 <img width="253" alt="Distro_test" src="https://github.com/user-attachments/assets/55b0d94d-53a7-4341-a883-f6c6e14c54c8">
+
 The plotted results: 
 ![newplot](https://github.com/user-attachments/assets/f01b0f73-579e-41a0-960c-c2a19fb23fc8)
 
