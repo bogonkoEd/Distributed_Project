@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\BOGONKO\Desktop\4.1\Distributed sys\GroupWork -Loadbalancer\Distributed_Project\global"
+VIRTUAL_ENV="C:\Users\marti\.vscode\Distributed_Project\global"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

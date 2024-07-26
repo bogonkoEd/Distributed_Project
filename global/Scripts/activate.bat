@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\BOGONKO\Desktop\4.1\Distributed sys\GroupWork -Loadbalancer\Distributed_Project\global
+set VIRTUAL_ENV=C:\Users\marti\.vscode\Distributed_Project\global
 
 if not defined PROMPT set PROMPT=$P$G
 
