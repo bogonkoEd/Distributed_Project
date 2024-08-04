@@ -29,29 +29,32 @@ logger.addHandler(logHandler)
 
 client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
-
 @app.route("/", methods=["GET"])
 def landing_page():
     return "Load Balancer is active."
-
 
 @app.route("/stats", methods=["GET"])
 def get_stats():
     return jsonify(hash_ring.server_requests), 200
 
-
 @app.route("/<path:path>", methods=["GET", "POST", "PUT", "DELETE"])
 def load_balancer(path):
     try:
         containers = client.containers.list(filters={"name": "server"})
-        for container in containers:
-
-            hash_ring.add_server(container.name)
+        current_servers = set(container.name for container in containers)
+        existing_servers = set(hash_ring.server_names)
+        
+        # Add new servers
+        for server in current_servers - existing_servers:
+            hash_ring.add_server(server)
+        
+        # Remove old servers
+        for server in existing_servers - current_servers:
+            hash_ring.remove_server(server)
 
         server = hash_ring.get_server(request.remote_addr)
-
         
-        #Check if a server was found
+        # Check if a server was found
         if server:
             # Fetch message from the server
             try:
@@ -69,7 +72,7 @@ def load_balancer(path):
                 "method": request.method,
                 "message": server_message
             }
-           
+            
             # Log the request details in JSON
             logger.info(json.dumps(log_message))
 
@@ -89,12 +92,10 @@ def load_balancer(path):
         else:  # KeyError (Server not found)
             return "Service Unavailable", 503
 
-
 @app.route("/healthcheck", methods=["GET"])
 def healthcheck():
     logger.info("Healthcheck successful")
     return "OK", 200
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80)
