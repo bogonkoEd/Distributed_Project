@@ -1,7 +1,7 @@
 import mmh3
 
 class ConsistentHash:
-    def __init__(self, num_slots=160, num_replicas=3): 
+    def __init__(self, num_slots=160, num_replicas=120): 
         self.num_slots = num_slots
         self.num_replicas = num_replicas
         self.hash_ring = {}
@@ -24,6 +24,7 @@ class ConsistentHash:
         for i in range(self.num_replicas):
             virtual_node = f"{server_name}#{i}"
             del self.hash_ring[self._hash(virtual_node)]
+        if server_name in self.server_requests:
             del self.server_requests[server_name]
 
     def get_server(self, request_id):

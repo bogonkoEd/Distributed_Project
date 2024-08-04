@@ -3,35 +3,31 @@ from collections import Counter
 import plotly.graph_objects as go
 
 def read_log_file(filename):
+    """Reads log file and returns its contents as a list of lines."""
     with open(filename, 'r') as file:
         return file.readlines()
 
 def parse_log(log_lines):
-    servers = []
+    """Parses log lines and returns a dictionary of server names to request counts."""
+    server_requests = {}
     for line in log_lines:
         log_data = json.loads(line)
-        if "message" in log_data:
-            nested_data = json.loads(log_data["message"])
-            servers.append(nested_data["server"]) 
+        server_name = log_data.get("server")
+        if server_name:
+            server_requests[server_name] = server_requests.get(server_name, 0) + 1 
+    return server_requests
 
-    return servers
+def generate_graph(server_requests):
+    """Generates a bar graph from the server request data."""
+    server_names = list(server_requests.keys())
+    request_counts = list(server_requests.values())
 
-def generate_graph(servers):
-    server_counts = Counter(servers)
-    total_requests = sum(server_counts.values())
-
-    server_names = list(server_counts.keys())
-    request_counts = list(server_counts.values())
-    percentages = [(count / total_requests) * 100 for count in request_counts]
-
-    # Create Pie Chart
-    fig = go.Figure(data=[go.Pie(labels=server_names, values=request_counts, textinfo='percent+label')])
-    fig.update_layout(title_text='Request Distribution Among Servers')
-
-    # Show the chart
+    fig = go.Figure(data=[go.Bar(x=server_names, y=request_counts, text=request_counts, textposition='auto')])
+    fig.update_layout(title_text='Request Distribution Among Servers', xaxis_title='Server Name', yaxis_title='Number of Requests')
     fig.show()
+
 
 if __name__ == "__main__":
     log_file = read_log_file("logs/requests.log")
-    servers = parse_log(log_file)
-    generate_graph(servers)
+    server_requests = parse_log(log_file)
+    generate_graph(server_requests)

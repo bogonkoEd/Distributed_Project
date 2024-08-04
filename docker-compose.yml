@@ -12,34 +12,6 @@ services:
       - ./logs:/app/logs
 
 
-  server1:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
-    environment:
-      - SERVER_ID=1
-    networks:
-      - load_balancer_network
-
-
-  server2:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
-    environment:
-      - SERVER_ID=2
-    networks:
-      - load_balancer_network
-
-  server3:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
-    environment:
-      - SERVER_ID=3
-    networks:
-      - load_balancer_network
-
 networks:
   load_balancer_network:
     driver: bridge

@@ -1,0 +1,10 @@
+{"asctime": "2024-08-04 06:07:18,361", "levelname": "INFO", "message": {"remote_addr": "172.19.0.1", "server": "server-1", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:20,112", "levelname": "INFO", "message": {"remote_addr": "172.19.0.2", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:22,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:27,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:32,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:34,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:40,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:42,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:44,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
+{"asctime": "2024-08-04 06:07:48,847", "levelname": "INFO", "message": {"remote_addr": "172.19.0.3", "server": "server-3", "method": "GET", "message": "Server message not available"}}
